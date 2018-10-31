@@ -28,7 +28,6 @@
   .#{$prefix}--structured-list {
     @include reset;
     @include font-family;
-    display: table;
     overflow-x: auto;
     overflow-y: hidden;
     width: 100%;
@@ -50,13 +49,29 @@
   }
 
   .#{$prefix}--structured-list-row {
-    display: table-row;
     border-bottom: 1px solid $ui-03;
     transition: $transition--base $carbon--standard-easing;
 
     .#{$prefix}--structured-list--selection &:hover:not(.#{$prefix}--structured-list-row--header-row) {
       background-color: $hover-row;
       cursor: pointer;
+    }
+
+    &__selectable {
+      .#{$prefix}--structured-list-td {
+        padding: 0;
+        min-height: 1px;
+
+        &:last-child {
+          padding-right: 0;
+        }
+      }
+      label {
+        display: block;
+        cursor: pointer;
+        padding: 1em;
+        height: 100%;
+      }
     }
 
     // Deprecated
@@ -67,6 +82,7 @@
 
     &.#{$prefix}--structured-list-row--selected {
       background-color: $hover-row;
+      outline: 1px solid #3d70b2;
     }
 
     &.#{$prefix}--structured-list-row--header-row {
@@ -82,13 +98,16 @@
   .#{$prefix}--structured-list-thead {
     display: table-header-group;
     vertical-align: middle;
+    .#{$prefix}--structured-list-row {
+      border: 0;
+      border-bottom: 2px solid $brand-01;
+    }
   }
 
   .#{$prefix}--structured-list-th {
     @include reset;
     @include padding-th;
     @include typescale('omega');
-    display: table-cell;
     font-weight: 600;
     height: rem(40px);
     text-align: left;
@@ -107,7 +126,6 @@
     @include line-height('body');
     @include padding-td;
     position: relative;
-    display: table-cell;
   }
 
   .#{$prefix}--structured-list-th,
@@ -129,8 +147,7 @@
       fill: $hover-row;
     }
 
-    .#{$prefix}--structured-list-input:checked + .#{$prefix}--structured-list-row &,
-    .#{$prefix}--structured-list-input:checked + .#{$prefix}--structured-list-td & {
+    .#{$prefix}--structured-list-row--selected .#{$prefix}--structured-list-input:checked + & {
       fill: $brand-02;
     }
   }
